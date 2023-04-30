@@ -1,9 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import unicodeMapping from '../features/emoji/emoji_unicode_mapping_light';
-import { assetHost } from 'mastodon/utils/config';
+import { assetHost } from '../utils/config';
 
-export default class AutosuggestEmoji extends React.PureComponent {
+type CustomEmoji = {
+  custom: true;
+  imageUrl: string;
+  native: string;
+  colons: `:${string}:`;
+}
+
+type NativeEmoji = {
+  custom: undefined;
+  native: string,
+  colons: `:${string}:`,
+}
+
+type Emoji = CustomEmoji | NativeEmoji;
+
+type Props = {
+  emoji: Emoji;
+}
+export default class AutosuggestEmoji extends React.PureComponent<Props> {
 
   static propTypes = {
     emoji: PropTypes.object.isRequired,

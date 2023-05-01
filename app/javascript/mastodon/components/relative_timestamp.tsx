@@ -70,7 +70,7 @@ const getUnitDelay = (units: string) => {
   }
 };
 
-export const timeAgoString = (intl: InjectedIntl, date: Date, now: number, year: number, timeGiven: boolean, short?: boolean) => {
+export const timeAgoString = (intl: InjectedIntl, date: Date, now: number, year: number | undefined, timeGiven: boolean, short?: boolean) => {
   const delta = now - date.getTime();
 
   let relativeTime;
@@ -123,7 +123,7 @@ const timeRemainingString = (intl: InjectedIntl, date: Date, now: number, timeGi
 type Props = {
   intl: InjectedIntl;
   timestamp: string;
-  year: number;
+  year?: number;
   futureDate?: boolean;
   short?: boolean;
 }

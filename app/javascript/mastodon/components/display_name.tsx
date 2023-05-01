@@ -5,9 +5,9 @@ import { Account } from '../../types/resources';
 import { List } from 'immutable';
 
 type Props = {
-  account: Account;
-  others: List<Account>;
-  localDomain: string;
+  account?: Account;
+  others?: List<Account>;
+  localDomain?: string;
 }
 export default class DisplayName extends React.PureComponent<Props> {
 
@@ -40,7 +40,7 @@ export default class DisplayName extends React.PureComponent<Props> {
   render () {
     const { others, localDomain } = this.props;
 
-    let displayName, suffix, account;
+    let displayName: React.ReactNode, suffix: React.ReactNode, account: Account | undefined;
 
     if (others && others.size > 1) {
       displayName = others.take(2).map(a => <bdi key={a.get('id')}><strong className='display-name__html' dangerouslySetInnerHTML={{ __html: a.get('display_name_html') }} /></bdi>).reduce((prev, cur) => [prev, ', ', cur]);
@@ -55,13 +55,15 @@ export default class DisplayName extends React.PureComponent<Props> {
         account = this.props.account;
       }
 
-      let acct = account?.get('acct');
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      let acct = account!.get('acct');
 
       if (acct.indexOf('@') === -1 && localDomain) {
         acct = `${acct}@${localDomain}`;
       }
 
-      displayName = <bdi><strong className='display-name__html' dangerouslySetInnerHTML={{ __html: account?.get('display_name_html') }} /></bdi>;
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      displayName = <bdi><strong className='display-name__html' dangerouslySetInnerHTML={{ __html: account!.get('display_name_html') }} /></bdi>;
       suffix      = <span className='display-name__account'>@{acct}</span>;
     } else {
       displayName = <bdi><strong className='display-name__html'><Skeleton width='10ch' /></strong></bdi>;

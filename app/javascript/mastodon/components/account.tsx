@@ -1,19 +1,18 @@
 import React from 'react';
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import PropTypes from 'prop-types';
-import Avatar from './avatar';
+import { Account as AccountType } from '../../types/resources';
+import { Avatar } from './avatar';
 import DisplayName from './display_name';
 import IconButton from './icon_button';
-import { defineMessages, injectIntl } from 'react-intl';
+import { InjectedIntl, defineMessages, injectIntl } from 'react-intl';
 import ImmutablePureComponent from 'react-immutable-pure-component';
 import { me } from '../initial_state';
 import RelativeTimestamp from './relative_timestamp';
-import Skeleton from 'mastodon/components/skeleton';
+import Skeleton from './skeleton';
 import { Link } from 'react-router-dom';
-import { counterRenderer } from 'mastodon/components/common_counter';
-import ShortNumber from 'mastodon/components/short_number';
+import { counterRenderer } from './common_counter';
+import ShortNumber from './short_number';
 import classNames from 'classnames';
-import VerifiedBadge from 'mastodon/components/verified_badge';
+import VerifiedBadge from './verified_badge';
 
 const messages = defineMessages({
   follow: { id: 'account.follow', defaultMessage: 'Follow' },
@@ -27,23 +26,22 @@ const messages = defineMessages({
   block: { id: 'account.block', defaultMessage: 'Block @{name}' },
 });
 
-class Account extends ImmutablePureComponent {
-
-  static propTypes = {
-    size: PropTypes.number,
-    account: ImmutablePropTypes.map,
-    onFollow: PropTypes.func.isRequired,
-    onBlock: PropTypes.func.isRequired,
-    onMute: PropTypes.func.isRequired,
-    onMuteNotifications: PropTypes.func.isRequired,
-    intl: PropTypes.object.isRequired,
-    hidden: PropTypes.bool,
-    minimal: PropTypes.bool,
-    actionIcon: PropTypes.string,
-    actionTitle: PropTypes.string,
-    defaultAction: PropTypes.string,
-    onActionClick: PropTypes.func,
-  };
+type Props = {
+  size: number;
+  account: AccountType;
+  onFollow: (account: AccountType) => void;
+  onBlock: (account: AccountType) => void;
+  onMute: (account: AccountType) => void;
+  onMuteNotifications: (account: AccountType, isMute: boolean) => void;
+  intl: InjectedIntl;
+  hidden?: boolean;
+  minimal?: boolean;
+  actionIcon?: string;
+  actionTitle?: string;
+  defaultAction?: string;
+  onActionClick?: (account: AccountType) => void;
+}
+class Account extends ImmutablePureComponent<Props> {
 
   static defaultProps = {
     size: 46,
@@ -70,6 +68,7 @@ class Account extends ImmutablePureComponent {
   };
 
   handleAction = () => {
+    if(this.props.onActionClick == null) return;
     this.props.onActionClick(this.props.account);
   };
 
@@ -106,13 +105,14 @@ class Account extends ImmutablePureComponent {
 
     if (actionIcon) {
       if (onActionClick) {
+        // @ts-expect-error In refactoring
         buttons = <IconButton icon={actionIcon} title={actionTitle} onClick={this.handleAction} />;
       }
     } else if (account.get('id') !== me && account.get('relationship', null) !== null) {
-      const following = account.getIn(['relationship', 'following']);
-      const requested = account.getIn(['relationship', 'requested']);
-      const blocking  = account.getIn(['relationship', 'blocking']);
-      const muting  = account.getIn(['relationship', 'muting']);
+      const following = account.get('relationship')?.get('following');
+      const requested = account.get('relationship')?.get('requested');
+      const blocking  = account.get('relationship')?.get('blocking');
+      const muting  = account.get('relationship')?.get('muting');
 
       if (requested) {
         buttons = <IconButton disabled icon='hourglass' title={intl.formatMessage(messages.requested)} />;
@@ -120,7 +120,7 @@ class Account extends ImmutablePureComponent {
         buttons = <IconButton active icon='unlock' title={intl.formatMessage(messages.unblock, { name: account.get('username') })} onClick={this.handleBlock} />;
       } else if (muting) {
         let hidingNotificationsButton;
-        if (account.getIn(['relationship', 'muting_notifications'])) {
+        if (account.get('relationship')?.get('muting_notifications')) {
           hidingNotificationsButton = <IconButton active icon='bell' title={intl.formatMessage(messages.unmute_notifications, { name: account.get('username') })} onClick={this.handleUnmuteNotifications} />;
         } else {
           hidingNotificationsButton = <IconButton active icon='bell-slash' title={intl.formatMessage(messages.mute_notifications, { name: account.get('username')  })} onClick={this.handleMuteNotifications} />;
@@ -142,8 +142,9 @@ class Account extends ImmutablePureComponent {
 
     let muteTimeRemaining;
 
-    if (account.get('mute_expires_at')) {
-      muteTimeRemaining = <>· <RelativeTimestamp timestamp={account.get('mute_expires_at')} futureDate /></>;
+    const mute_expires_at = account.get('mute_expires_at');
+    if (mute_expires_at != null) {
+      muteTimeRemaining = <>· <RelativeTimestamp timestamp={mute_expires_at} futureDate /></>;
     }
 
     let verification;

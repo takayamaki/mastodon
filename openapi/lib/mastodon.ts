@@ -34,6 +34,18 @@ export interface paths {
       };
     };
   };
+  "/nodeinfo/2.0": {
+    get: {
+      responses: {
+        /** node info */
+        200: {
+          content: {
+            "application/json": components["schemas"]["nodeinfo_2.0"];
+          };
+        };
+      };
+    };
+  };
 }
 
 export interface components {
@@ -67,6 +79,34 @@ export interface components {
     error: {
       error: string;
     };
+    /** @description NodeInfo schema version 2.0. */
+    "nodeinfo_2.0": {
+      /**
+       * @description The schema version, must be 2.0.
+       * @enum {string}
+       */
+      version: "2.0";
+      software: components["schemas"]["nodeinfo_2_0_software"];
+      /** @description The protocols supported on this server. */
+      protocols: (
+        | "activitypub"
+        | "buddycloud"
+        | "dfrn"
+        | "diaspora"
+        | "libertree"
+        | "ostatus"
+        | "pumpio"
+        | "tent"
+        | "xmpp"
+        | "zot"
+      )[];
+      services: components["schemas"]["nodeinfo_2_0_services"];
+      /** @description Whether this server allows open self-registration. */
+      openRegistrations: boolean;
+      usage: components["schemas"]["nodeinfo_2_0_usage"];
+      /** @description Free form key value pairs for software specific values. Clients should not rely on any specific key present. */
+      metadata: { [key: string]: unknown };
+    };
     /** @enum {string|null} */
     null: null | null;
     account_field: {
@@ -87,6 +127,75 @@ export interface components {
       name: string;
     };
     datetime_or_null: string | components["schemas"]["null"];
+    /** @description Metadata about server software in use. */
+    nodeinfo_2_0_software: {
+      /** @description The canonical name of this server software. */
+      name: string;
+      /** @description The version of this server software. */
+      version: string;
+    };
+    /** @description The third party sites this server can connect to via their application API. */
+    nodeinfo_2_0_services: {
+      /** @description The third party sites this server can retrieve messages from for combined display with regular traffic. */
+      inbound: (
+        | "atom1.0"
+        | "gnusocial"
+        | "imap"
+        | "pnut"
+        | "pop3"
+        | "pumpio"
+        | "rss2.0"
+        | "twitter"
+      )[];
+      /** @description The third party sites this server can publish messages to on the behalf of a user. */
+      outbound: (
+        | "atom1.0"
+        | "blogger"
+        | "buddycloud"
+        | "diaspora"
+        | "dreamwidth"
+        | "drupal"
+        | "facebook"
+        | "friendica"
+        | "gnusocial"
+        | "google"
+        | "insanejournal"
+        | "libertree"
+        | "linkedin"
+        | "livejournal"
+        | "mediagoblin"
+        | "myspace"
+        | "pinterest"
+        | "pnut"
+        | "posterous"
+        | "pumpio"
+        | "redmatrix"
+        | "rss2.0"
+        | "smtp"
+        | "tent"
+        | "tumblr"
+        | "twitter"
+        | "wordpress"
+        | "xmpp"
+      )[];
+    };
+    /** @description statistics about the users of this server. */
+    nodeinfo_2_0_usage_users: {
+      /** @description The total amount of on this server registered users. */
+      total?: number;
+      /** @description The amount of users that signed in at least once in the last 180 days. */
+      activeHalfyear?: number;
+      /** @description The amount of users that signed in at least once in the last 30 days. */
+      activeMonth?: number;
+    };
+    /** @description Usage statistics for this server. */
+    nodeinfo_2_0_usage: {
+      users: components["schemas"]["nodeinfo_2_0_usage_users"];
+      /** @description The amount of posts that were made by users that are registered on this server. */
+      localPosts?: number;
+      /** @description The amount of comments that were made by users that are registered on this server. */
+      localComments?: number;
+    };
   };
 }
 

@@ -119,7 +119,7 @@ export interface components {
       url: string;
       static_url: string;
       visible_in_picker: boolean;
-      category: string;
+      category?: string;
     };
     account_last_status_at: string | components["schemas"]["null"];
     /** @description Metadata about server software in use. */

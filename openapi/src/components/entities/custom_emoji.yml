@@ -5,7 +5,6 @@ required:
   - url
   - static_url
   - visible_in_picker
-  - category
 properties:
   shortcode:
     type: string

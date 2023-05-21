@@ -24,7 +24,7 @@ describe Api::V1::Timelines::HomeController do
         get :show
 
         expect(response).to have_http_status(200)
-        expect(response.headers['Link'].links.size).to eq(2)
+        expect(LinkHeader.parse(response.headers['Link']).links.size).to eq(2)
       end
     end
   end
@@ -37,7 +37,7 @@ describe Api::V1::Timelines::HomeController do
         get :show
 
         expect(response).to have_http_status(422)
-        expect(response.headers['Link']).to be_nil
+        expect(LinkHeader.parse(response.headers['Link']).links).to be_empty
       end
     end
   end

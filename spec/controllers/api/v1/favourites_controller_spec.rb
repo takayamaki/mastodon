@@ -65,14 +65,14 @@ RSpec.describe Api::V1::FavouritesController do
 
           get :index, params: { limit: 1 }
 
-          expect(response.headers['Link'].find_link(%w(rel next)).href).to eq "http://test.host/api/v1/favourites?limit=1&max_id=#{favourite.id}"
-          expect(response.headers['Link'].find_link(%w(rel prev)).href).to eq "http://test.host/api/v1/favourites?limit=1&min_id=#{favourite.id}"
+          expect(LinkHeader.parse(response.headers['Link']).find_link(%w(rel next)).href).to eq "http://test.host/api/v1/favourites?limit=1&max_id=#{favourite.id}"
+          expect(LinkHeader.parse(response.headers['Link']).find_link(%w(rel prev)).href).to eq "http://test.host/api/v1/favourites?limit=1&min_id=#{favourite.id}"
         end
 
         it 'does not add pagination headers if not necessary' do
           get :index
 
-          expect(response.headers['Link']).to be_nil
+          expect(LinkHeader.parse(response.headers['Link']).links).to be_empty
         end
       end
     end

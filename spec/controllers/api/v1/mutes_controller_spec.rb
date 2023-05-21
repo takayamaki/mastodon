@@ -39,13 +39,13 @@ RSpec.describe Api::V1::MutesController do
     it 'sets pagination header for next path' do
       mutes = Array.new(2) { Fabricate(:mute, account: user.account) }
       get :index, params: { limit: 1, since_id: mutes[0] }
-      expect(response.headers['Link'].find_link(%w(rel next)).href).to eq api_v1_mutes_url(limit: 1, max_id: mutes[1])
+      expect(LinkHeader.parse(response.headers['Link']).find_link(%w(rel next)).href).to eq api_v1_mutes_url(limit: 1, max_id: mutes[1])
     end
 
     it 'sets pagination header for previous path' do
       mute = Fabricate(:mute, account: user.account)
       get :index
-      expect(response.headers['Link'].find_link(%w(rel prev)).href).to eq api_v1_mutes_url(since_id: mute)
+      expect(LinkHeader.parse(response.headers['Link']).find_link(%w(rel prev)).href).to eq api_v1_mutes_url(since_id: mute)
     end
 
     it 'returns http success' do

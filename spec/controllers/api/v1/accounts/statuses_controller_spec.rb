@@ -23,7 +23,7 @@ describe Api::V1::Accounts::StatusesController do
     it 'returns expected headers' do
       get :index, params: { account_id: user.account.id, limit: 1 }
 
-      expect(response.headers['Link'].links.size).to eq(2)
+      expect(LinkHeader.parse(response.headers['Link']).links.size).to eq(2)
     end
 
     context 'with only media' do

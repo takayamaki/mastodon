@@ -27,7 +27,7 @@ RSpec.describe Api::V1::ConversationsController do
 
     it 'returns pagination headers' do
       get :index, params: { limit: 1 }
-      expect(response.headers['Link'].links.size).to eq(2)
+      expect(LinkHeader.parse(response.headers['Link']).links.size).to eq(2)
     end
 
     it 'returns conversations' do

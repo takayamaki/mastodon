@@ -39,13 +39,13 @@ RSpec.describe Api::V1::BlocksController do
     it 'sets pagination header for next path' do
       blocks = Array.new(2) { Fabricate(:block, account: user.account) }
       get :index, params: { limit: 1, since_id: blocks[0] }
-      expect(response.headers['Link'].find_link(%w(rel next)).href).to eq api_v1_blocks_url(limit: 1, max_id: blocks[1])
+      expect(LinkHeader.parse(response.headers['Link']).find_link(%w(rel next)).href).to eq api_v1_blocks_url(limit: 1, max_id: blocks[1])
     end
 
     it 'sets pagination header for previous path' do
       block = Fabricate(:block, account: user.account)
       get :index
-      expect(response.headers['Link'].find_link(%w(rel prev)).href).to eq api_v1_blocks_url(since_id: block)
+      expect(LinkHeader.parse(response.headers['Link']).find_link(%w(rel prev)).href).to eq api_v1_blocks_url(since_id: block)
     end
 
     it 'returns http success' do

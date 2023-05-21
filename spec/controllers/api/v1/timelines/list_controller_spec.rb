@@ -49,7 +49,7 @@ describe Api::V1::Timelines::ListController do
         get :show, params: { id: list.id }
 
         expect(response).to have_http_status(422)
-        expect(response.headers['Link']).to be_nil
+        expect(LinkHeader.parse(response.headers['Link']).links).to be_empty
       end
     end
   end

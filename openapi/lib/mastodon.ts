@@ -34,6 +34,46 @@ export interface paths {
       };
     };
   };
+  "/api/v1/accounts/{account_id}/followers": {
+    get: {
+      parameters: {
+        path: {
+          /** account id */
+          account_id: string;
+        };
+        query: {
+          /** Internal parameter. Use HTTP Link header for pagination. */
+          max_id?: string;
+          /** Internal parameter. Use HTTP Link header for pagination. */
+          since_id?: string;
+          /** Internal parameter. Use HTTP Link header for pagination. */
+          min_id?: string;
+          /** Integer. Maximum number of results to return. Defaults to 40 accounts. Max 80 accounts. */
+          limit?: number;
+        };
+      };
+      responses: {
+        /** Accounts which follow the given account */
+        200: {
+          content: {
+            "application/json": components["schemas"]["account"][];
+          };
+        };
+        /** forbidden */
+        403: {
+          content: {
+            "application/json": components["schemas"]["error"];
+          };
+        };
+        /** not found */
+        404: {
+          content: {
+            "application/json": components["schemas"]["error"];
+          };
+        };
+      };
+    };
+  };
   "/nodeinfo/2.0": {
     get: {
       responses: {

@@ -59,6 +59,86 @@
         "tags" : [ "accounts" ]
       }
     },
+    "/api/v1/accounts/{account_id}/followers" : {
+      "get" : {
+        "parameters" : [ {
+          "description" : "account id",
+          "in" : "path",
+          "name" : "account_id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "description" : "Internal parameter. Use HTTP Link header for pagination.",
+          "in" : "query",
+          "name" : "max_id",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "description" : "Internal parameter. Use HTTP Link header for pagination.",
+          "in" : "query",
+          "name" : "since_id",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "description" : "Internal parameter. Use HTTP Link header for pagination.",
+          "in" : "query",
+          "name" : "min_id",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "description" : "Integer. Maximum number of results to return. Defaults to 40 accounts. Max 80 accounts.",
+          "in" : "query",
+          "name" : "limit",
+          "schema" : {
+            "default" : 40,
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/account"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "Accounts which follow the given account"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/error"
+                }
+              }
+            },
+            "description" : "forbidden"
+          },
+          "404" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/error"
+                }
+              }
+            },
+            "description" : "not found"
+          }
+        },
+        "security" : [ { } ],
+        "summary" : "Accounts which follow the given account, if network is not hidden by the account owner.",
+        "tags" : [ "accounts" ]
+      }
+    },
     "/nodeinfo/2.0" : {
       "get" : {
         "responses" : {

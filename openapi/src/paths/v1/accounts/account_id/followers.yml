@@ -1,0 +1,58 @@
+get:
+  summary: Accounts which follow the given account, if network is not hidden by the account owner.
+
+  tags:
+    - accounts
+  security:
+    - Authorization:
+  parameters:
+    - name: account_id
+      in: path
+      required: true
+      description: account id
+      schema:
+        type: string
+    - name: max_id
+      in: query
+      description: Internal parameter. Use HTTP Link header for pagination.
+      schema:
+        type: string
+    - name: since_id
+      in: query
+      description: Internal parameter. Use HTTP Link header for pagination.
+      schema:
+        type: string
+    - name: min_id
+      in: query
+      description: Internal parameter. Use HTTP Link header for pagination.
+      schema:
+        type: string
+    - name: limit
+      in: query
+      description: Integer. Maximum number of results to return. Defaults to 40 accounts. Max 80 accounts.
+      schema:
+        type: integer
+        default: 40
+        min: 1
+        max: 80
+  responses:
+    '200':
+      description: Accounts which follow the given account
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../../../components/entities/account.yml'
+    '403':
+      description: forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '../../../../components/entities/error.yml'
+    '404':
+      description: not found
+      content:
+        application/json:
+          schema:
+            $ref: '../../../../components/entities/error.yml'

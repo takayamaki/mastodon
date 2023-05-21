@@ -56,6 +56,20 @@ module SignedRequestHelpers
   end
 end
 
+module LinkHeaderHelpers
+  def next_path(link_header)
+    next_url = URI.parse(LinkHeader.parse(link_header).links.find { _1.attr_pairs == [%w(rel next)] }.href)
+
+    "#{next_url.path}?#{next_url.query}"
+  end
+
+  def prev_path(link_header)
+    prev_url = URI.parse(LinkHeader.parse(link_header).links.find { _1.attr_pairs == [%w(rel prev)] }.href)
+
+    "#{prev_url.path}?#{prev_url.query}"
+  end
+end
+
 RSpec.configure do |config|
   config.fixture_path = Rails.root.join('spec', 'fixtures')
   config.use_transactional_fixtures = true
@@ -73,8 +87,9 @@ RSpec.configure do |config|
   config.include Chewy::Rspec::Helpers
   config.include Redisable
   config.include SignedRequestHelpers, type: :request
+  config.include LinkHeaderHelpers, type: :request
 
-  config.include Committee::Rails::Test::Methods
+  config.include Committee::Rails::Test::Methods, type: :request
   config.add_setting :committee_options
   config.committee_options = {
     schema_path: Rails.root.join('openapi', 'dist', 'openapi.json').to_s,

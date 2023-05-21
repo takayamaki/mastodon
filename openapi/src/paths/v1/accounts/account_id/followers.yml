@@ -38,6 +38,13 @@ get:
   responses:
     '200':
       description: Accounts which follow the given account
+      headers:
+        link:
+          description: RFC8288 Link header for pagination.
+          required: true
+          schema:
+            type: string
+            example: <https://www.example.com/api/v1/accounts/1/followers?max_id=1>; rel="next", <https://www.example.com/api/v1/accounts/1/followers?since_id=2>; rel="prev"
       content:
         application/json:
           schema:

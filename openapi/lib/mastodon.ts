@@ -55,6 +55,10 @@ export interface paths {
       responses: {
         /** Accounts which follow the given account */
         200: {
+          headers: {
+            /** RFC8288 Link header for pagination. */
+            link: string;
+          };
           content: {
             "application/json": components["schemas"]["account"][];
           };

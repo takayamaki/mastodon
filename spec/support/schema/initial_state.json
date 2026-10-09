@@ -468,7 +468,7 @@
               "type": "boolean"
             },
             "use_blurhash": {
-              "type": "boolean"
+              "type": ["boolean", "null"]
             },
             "use_pending_items": {
               "type": "boolean"

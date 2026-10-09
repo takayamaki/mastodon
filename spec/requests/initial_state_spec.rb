@@ -9,8 +9,6 @@ RSpec.describe 'Initial state embedded in the web app' do
     before { sign_in user }
 
     it 'conforms to the initial_state JSON schema' do
-      pending 'the schema still encodes the hand-written TS type, which has drifted from the serializer'
-
       get root_path
 
       expect(initial_state).to match_json_schema('initial_state')

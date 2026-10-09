@@ -453,7 +453,7 @@
               "type": ["string", "null"]
             },
             "status_page_url": {
-              "type": "string"
+              "type": ["string", "null"]
             },
             "streaming_api_base_url": {
               "type": "string"

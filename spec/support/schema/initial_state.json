@@ -337,7 +337,7 @@
               "type": "boolean"
             },
             "admin": {
-              "type": "string"
+              "type": ["string", "null"]
             },
             "advanced_layout": {
               "type": "boolean"

@@ -532,6 +532,38 @@
           "type": "object"
         },
         "push_subscription": {
+          "additionalProperties": false,
+          "properties": {
+            "alerts": {
+              "additionalProperties": {
+                "type": "boolean"
+              },
+              "type": "object"
+            },
+            "endpoint": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "policy": {
+              "type": "string"
+            },
+            "server_key": {
+              "type": "string"
+            },
+            "standard": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "id",
+            "endpoint",
+            "standard",
+            "alerts",
+            "server_key",
+            "policy"
+          ],
           "type": ["object", "null"]
         },
         "role": {

@@ -554,6 +554,9 @@
             "collection_limit"
           ],
           "type": "object"
+        },
+        "settings": {
+          "type": "object"
         }
       },
       "required": [
@@ -562,7 +565,8 @@
         "compose",
         "meta",
         "features",
-        "media_attachments"
+        "media_attachments",
+        "settings"
       ],
       "type": "object"
     },

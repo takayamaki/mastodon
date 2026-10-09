@@ -523,6 +523,9 @@
           ],
           "type": "object"
         },
+        "push_subscription": {
+          "type": ["object", "null"]
+        },
         "role": {
           "additionalProperties": false,
           "properties": {
@@ -566,7 +569,8 @@
         "meta",
         "features",
         "media_attachments",
-        "settings"
+        "settings",
+        "push_subscription"
       ],
       "type": "object"
     },

@@ -135,7 +135,14 @@ RSpec.describe 'Initial state embedded in the web app' do
       expect(initial_state).to match_json_schema('initial_state')
     end
 
-    it 'has a null meta.access_token and no meta.me'
+    it 'has a null meta.access_token and no meta.me' do
+      get root_path
+
+      expect(initial_state['meta'])
+        .to include('access_token' => nil)
+        .and not_include('me')
+    end
+
     it 'exposes only the instance-wide display defaults in meta'
     it 'has an empty accounts map and empty settings'
     it 'has null push_subscription and role'

@@ -24,7 +24,14 @@ RSpec.describe 'Initial state embedded in the web app' do
         )
     end
 
-    it 'carries the session token in meta.access_token'
+    it 'carries the session token in meta.access_token' do
+      get root_path
+
+      expect(initial_state['meta']['access_token'])
+        .to be_present
+        .and eq(user.session_activations.sole.access_token.token)
+    end
+
     it 'includes the current account in accounts keyed by id'
     it 'exposes the user web UI preferences in meta as booleans'
     it 'exposes the composer defaults in compose'

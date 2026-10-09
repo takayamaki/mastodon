@@ -143,7 +143,19 @@ RSpec.describe 'Initial state embedded in the web app' do
         .and not_include('me')
     end
 
-    it 'exposes only the instance-wide display defaults in meta'
+    it 'exposes only the instance-wide display defaults in meta' do
+      Setting.auto_play_gif = true
+      Setting.display_media = 'show_all'
+      Setting.reduce_motion = true
+      Setting.use_blurhash = false
+
+      get root_path
+
+      expect(initial_state['meta'])
+        .to include('auto_play_gif' => true, 'display_media' => 'show_all', 'reduce_motion' => true, 'use_blurhash' => false)
+        .and not_include('boost_modal', 'delete_modal', 'expand_spoilers', 'advanced_layout', 'show_trends', 'emoji_style', 'wrapstodon')
+    end
+
     it 'has an empty accounts map and empty settings'
     it 'has null push_subscription and role'
     it 'leaves compose with an empty text only'

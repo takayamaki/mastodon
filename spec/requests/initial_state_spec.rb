@@ -179,7 +179,17 @@ RSpec.describe 'Initial state embedded in the web app' do
   end
 
   context 'when a signed-in user opens the share intent page' do
-    it 'joins title, text and url into compose.text separated by spaces'
+    let(:user) { Fabricate(:user) }
+
+    before { sign_in user }
+
+    it 'joins title, text and url into compose.text separated by spaces' do
+      get share_path(title: 'Title', text: 'Some text', url: 'https://example.com/')
+
+      expect(initial_state['compose'])
+        .to include('text' => 'Title Some text https://example.com/')
+    end
+
     it 'applies a requested visibility that is not wider than the user default'
     it 'ignores a requested visibility wider than the user default'
   end

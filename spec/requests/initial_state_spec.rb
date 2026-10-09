@@ -200,7 +200,15 @@ RSpec.describe 'Initial state embedded in the web app' do
         .to include('default_privacy' => 'unlisted')
     end
 
-    it 'ignores a requested visibility wider than the user default'
+    it 'ignores a requested visibility wider than the user default' do
+      user.settings.update(default_privacy: 'private')
+      user.save!
+
+      get share_path(text: 'Hello', visibility: 'public')
+
+      expect(initial_state['compose'])
+        .to include('default_privacy' => 'private')
+    end
   end
 
   context 'when a signed-in user has a web push subscription for the session' do

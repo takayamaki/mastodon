@@ -98,7 +98,13 @@ RSpec.describe 'Initial state embedded in the web app' do
         )
     end
 
-    it 'has no push_subscription when the session has none'
+    it 'has no push_subscription when the session has none' do
+      get root_path
+
+      expect(initial_state)
+        .to include('push_subscription' => nil)
+    end
+
     it 'does not include critical_updates_pending for a user without devops permission'
     it 'points meta.admin at the site contact account and includes that account in accounts'
   end

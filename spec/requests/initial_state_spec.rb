@@ -323,7 +323,14 @@ RSpec.describe 'Initial state embedded in the web app' do
   end
 
   context 'when the web app is rendered from another page' do
-    it 'embeds the same initial state structure'
+    it 'embeds the same initial state structure' do
+      Fabricate(:account, username: 'alice')
+      sign_in Fabricate(:user)
+
+      get short_account_path(username: 'alice')
+
+      expect(initial_state).to match_json_schema('initial_state')
+    end
   end
 
   private

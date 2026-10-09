@@ -312,7 +312,14 @@ RSpec.describe 'Initial state embedded in the web app' do
         )
     end
 
-    it 'reports registrations as closed'
+    it 'reports registrations as closed' do
+      Setting.registrations_mode = 'open'
+
+      get root_path
+
+      expect(initial_state['meta'])
+        .to include('registrations_open' => false)
+    end
   end
 
   context 'when the web app is rendered from another page' do

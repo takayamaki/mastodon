@@ -1,0 +1,569 @@
+{
+  "$ref": "#/definitions/InitialState",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {
+    "ApiAccountFieldJSON": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "verified_at": {
+          "type": ["string", "null"]
+        }
+      },
+      "required": ["name", "value", "verified_at"],
+      "type": "object"
+    },
+    "ApiAccountJSON": {
+      "$ref": "#/definitions/ApiMutedAccountJSON"
+    },
+    "ApiAccountRoleJSON": {
+      "additionalProperties": false,
+      "properties": {
+        "color": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": ["color", "id", "name"],
+      "type": "object"
+    },
+    "ApiAnnualReportState": {
+      "enum": ["available", "generating", "eligible", "ineligible"],
+      "type": "string"
+    },
+    "ApiCustomEmojiJSON": {
+      "additionalProperties": false,
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "featured": {
+          "type": "boolean"
+        },
+        "shortcode": {
+          "type": "string"
+        },
+        "static_url": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "visible_in_picker": {
+          "type": "boolean"
+        }
+      },
+      "required": ["shortcode", "static_url", "url", "visible_in_picker"],
+      "type": "object"
+    },
+    "ApiMutedAccountJSON": {
+      "additionalProperties": false,
+      "properties": {
+        "acct": {
+          "type": "string"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "avatar_description": {
+          "type": "string"
+        },
+        "avatar_static": {
+          "type": "string"
+        },
+        "bot": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "discoverable": {
+          "type": "boolean"
+        },
+        "display_name": {
+          "type": "string"
+        },
+        "email_subscriptions": {
+          "type": "boolean"
+        },
+        "emojis": {
+          "items": {
+            "$ref": "#/definitions/ApiCustomEmojiJSON"
+          },
+          "type": "array"
+        },
+        "feature_approval": {
+          "additionalProperties": false,
+          "properties": {
+            "automatic": {
+              "items": {
+                "enum": [
+                  "public",
+                  "followers",
+                  "following",
+                  "disabled",
+                  "unsupported_policy"
+                ],
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "current_user": {
+              "enum": ["automatic", "manual", "denied", "missing", "unknown"],
+              "type": "string"
+            },
+            "manual": {
+              "items": {
+                "enum": [
+                  "public",
+                  "followers",
+                  "following",
+                  "disabled",
+                  "unsupported_policy"
+                ],
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "required": ["automatic", "manual", "current_user"],
+          "type": "object"
+        },
+        "fields": {
+          "items": {
+            "$ref": "#/definitions/ApiAccountFieldJSON"
+          },
+          "type": "array"
+        },
+        "followers_count": {
+          "type": "number"
+        },
+        "following_count": {
+          "type": "number"
+        },
+        "group": {
+          "type": "boolean"
+        },
+        "header": {
+          "type": "string"
+        },
+        "header_description": {
+          "type": "string"
+        },
+        "header_static": {
+          "type": "string"
+        },
+        "hide_collections": {
+          "type": "boolean"
+        },
+        "id": {
+          "type": "string"
+        },
+        "indexable": {
+          "type": "boolean"
+        },
+        "invalid_handle": {
+          "type": "boolean"
+        },
+        "last_status_at": {
+          "type": ["string", "null"]
+        },
+        "limited": {
+          "type": "boolean"
+        },
+        "locked": {
+          "type": "boolean"
+        },
+        "memorial": {
+          "type": "boolean"
+        },
+        "moved": {
+          "$ref": "#/definitions/ApiAccountJSON"
+        },
+        "mute_expires_at": {
+          "type": ["string", "null"]
+        },
+        "noindex": {
+          "type": "boolean"
+        },
+        "note": {
+          "type": "string"
+        },
+        "roles": {
+          "items": {
+            "$ref": "#/definitions/ApiAccountRoleJSON"
+          },
+          "type": "array"
+        },
+        "show_featured": {
+          "type": "boolean"
+        },
+        "show_media": {
+          "type": "boolean"
+        },
+        "show_media_replies": {
+          "type": "boolean"
+        },
+        "statuses_count": {
+          "type": "number"
+        },
+        "suspended": {
+          "type": "boolean"
+        },
+        "uri": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "acct",
+        "avatar",
+        "avatar_description",
+        "avatar_static",
+        "bot",
+        "created_at",
+        "display_name",
+        "emojis",
+        "feature_approval",
+        "fields",
+        "followers_count",
+        "following_count",
+        "group",
+        "header",
+        "header_description",
+        "header_static",
+        "hide_collections",
+        "id",
+        "indexable",
+        "last_status_at",
+        "locked",
+        "note",
+        "show_featured",
+        "show_media",
+        "show_media_replies",
+        "statuses_count",
+        "uri",
+        "username"
+      ],
+      "type": "object"
+    },
+    "InitialState": {
+      "additionalProperties": false,
+      "properties": {
+        "accounts": {
+          "additionalProperties": {
+            "$ref": "#/definitions/ApiAccountJSON"
+          },
+          "type": "object"
+        },
+        "compose": {
+          "additionalProperties": false,
+          "properties": {
+            "default_language": {
+              "type": "string"
+            },
+            "default_privacy": {
+              "type": "string"
+            },
+            "default_quote_policy": {
+              "type": "string"
+            },
+            "default_sensitive": {
+              "type": "boolean"
+            },
+            "me": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            }
+          },
+          "required": ["text"],
+          "type": "object"
+        },
+        "critical_updates_pending": {
+          "type": "boolean"
+        },
+        "features": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "languages": {
+          "items": {
+            "$ref": "#/definitions/InitialStateLanguage"
+          },
+          "type": "array"
+        },
+        "meta": {
+          "additionalProperties": false,
+          "properties": {
+            "access_token": {
+              "type": "string"
+            },
+            "activity_api_enabled": {
+              "type": "boolean"
+            },
+            "admin": {
+              "type": "string"
+            },
+            "advanced_layout": {
+              "type": "boolean"
+            },
+            "auto_play_gif": {
+              "type": "boolean"
+            },
+            "boost_modal": {
+              "type": "boolean"
+            },
+            "custom_app_icon": {
+              "type": ["string", "null"]
+            },
+            "delete_modal": {
+              "type": "boolean"
+            },
+            "disable_hover_cards": {
+              "type": "boolean"
+            },
+            "disable_swiping": {
+              "type": "boolean"
+            },
+            "disabled_account_id": {
+              "type": "string"
+            },
+            "display_media": {
+              "type": "string"
+            },
+            "domain": {
+              "type": "string"
+            },
+            "emoji_style": {
+              "type": "string"
+            },
+            "expand_spoilers": {
+              "type": "boolean"
+            },
+            "landing_page": {
+              "enum": ["about", "trends", "local_feed"],
+              "type": "string"
+            },
+            "limited_federation_mode": {
+              "type": "boolean"
+            },
+            "local_live_feed_access": {
+              "enum": ["public", "authenticated", "disabled"],
+              "type": "string"
+            },
+            "local_topic_feed_access": {
+              "enum": ["public", "authenticated"],
+              "type": "string"
+            },
+            "locale": {
+              "type": "string"
+            },
+            "mascot": {
+              "type": ["string", "null"]
+            },
+            "me": {
+              "type": "string"
+            },
+            "missing_alt_text_modal": {
+              "type": "boolean"
+            },
+            "moved_to_account_id": {
+              "type": "string"
+            },
+            "owner": {
+              "type": "string"
+            },
+            "profile_directory": {
+              "type": "boolean"
+            },
+            "quick_boosting": {
+              "type": "boolean"
+            },
+            "reduce_motion": {
+              "type": "boolean"
+            },
+            "registrations_open": {
+              "type": "boolean"
+            },
+            "remote_live_feed_access": {
+              "enum": ["public", "authenticated", "disabled"],
+              "type": "string"
+            },
+            "remote_topic_feed_access": {
+              "enum": ["public", "authenticated", "disabled"],
+              "type": "string"
+            },
+            "repository": {
+              "type": "string"
+            },
+            "search_enabled": {
+              "type": "boolean"
+            },
+            "show_trends": {
+              "type": "boolean"
+            },
+            "single_user_mode": {
+              "type": "boolean"
+            },
+            "source_url": {
+              "type": "string"
+            },
+            "sso_redirect": {
+              "type": "string"
+            },
+            "status_page_url": {
+              "type": "string"
+            },
+            "streaming_api_base_url": {
+              "type": "string"
+            },
+            "terms_of_service_enabled": {
+              "type": "boolean"
+            },
+            "title": {
+              "type": "string"
+            },
+            "trends_enabled": {
+              "type": "boolean"
+            },
+            "use_blurhash": {
+              "type": "boolean"
+            },
+            "use_pending_items": {
+              "type": "boolean"
+            },
+            "version": {
+              "type": "string"
+            },
+            "wrapstodon": {
+              "anyOf": [
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "state": {
+                      "$ref": "#/definitions/ApiAnnualReportState"
+                    },
+                    "year": {
+                      "type": "number"
+                    }
+                  },
+                  "required": ["year", "state"],
+                  "type": "object"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "access_token",
+            "auto_play_gif",
+            "activity_api_enabled",
+            "admin",
+            "display_media",
+            "domain",
+            "limited_federation_mode",
+            "locale",
+            "mascot",
+            "profile_directory",
+            "registrations_open",
+            "reduce_motion",
+            "repository",
+            "search_enabled",
+            "trends_enabled",
+            "single_user_mode",
+            "source_url",
+            "streaming_api_base_url",
+            "local_live_feed_access",
+            "remote_live_feed_access",
+            "local_topic_feed_access",
+            "remote_topic_feed_access",
+            "title",
+            "custom_app_icon",
+            "show_trends",
+            "landing_page",
+            "use_blurhash",
+            "version",
+            "sso_redirect",
+            "status_page_url",
+            "terms_of_service_enabled"
+          ],
+          "type": "object"
+        },
+        "role": {
+          "additionalProperties": false,
+          "properties": {
+            "collection_limit": {
+              "type": "number"
+            },
+            "color": {
+              "type": "string"
+            },
+            "highlighted": {
+              "type": "boolean"
+            },
+            "id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "permissions": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "name",
+            "permissions",
+            "color",
+            "highlighted",
+            "collection_limit"
+          ],
+          "type": "object"
+        }
+      },
+      "required": ["accounts", "languages", "compose", "meta", "features"],
+      "type": "object"
+    },
+    "InitialStateLanguage": {
+      "items": [
+        {
+          "title": "code",
+          "type": "string"
+        },
+        {
+          "title": "name",
+          "type": "string"
+        },
+        {
+          "title": "localName",
+          "type": "string"
+        }
+      ],
+      "maxItems": 3,
+      "minItems": 3,
+      "type": "array"
+    }
+  }
+}

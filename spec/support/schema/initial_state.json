@@ -366,6 +366,9 @@
             "display_media": {
               "type": "string"
             },
+            "display_own_boosts": {
+              "type": "boolean"
+            },
             "domain": {
               "type": "string"
             },

@@ -170,7 +170,12 @@ RSpec.describe 'Initial state embedded in the web app' do
         .to include('push_subscription' => nil, 'role' => nil)
     end
 
-    it 'leaves compose with an empty text only'
+    it 'leaves compose with an empty text only' do
+      get root_path
+
+      expect(initial_state['compose'])
+        .to eq('text' => '')
+    end
   end
 
   context 'when a signed-in user opens the share intent page' do

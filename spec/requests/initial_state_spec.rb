@@ -4,7 +4,18 @@ require 'rails_helper'
 
 RSpec.describe 'Initial state embedded in the web app' do
   context 'when a signed-in user opens the home page' do
-    it 'conforms to the initial_state JSON schema'
+    let(:user) { Fabricate(:user) }
+
+    before { sign_in user }
+
+    it 'conforms to the initial_state JSON schema' do
+      pending 'the schema still encodes the hand-written TS type, which has drifted from the serializer'
+
+      get root_path
+
+      expect(initial_state).to match_json_schema('initial_state')
+    end
+
     it 'identifies the current account in meta.me and compose.me as the account id string'
     it 'carries the session token in meta.access_token'
     it 'includes the current account in accounts keyed by id'

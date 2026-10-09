@@ -32,7 +32,15 @@ RSpec.describe 'Initial state embedded in the web app' do
         .and eq(user.session_activations.sole.access_token.token)
     end
 
-    it 'includes the current account in accounts keyed by id'
+    it 'includes the current account in accounts keyed by id' do
+      get root_path
+
+      expect(initial_state['accounts'])
+        .to match(
+          user.account.id.to_s => include('id' => user.account.id.to_s, 'username' => user.account.username, 'acct' => user.account.username)
+        )
+    end
+
     it 'exposes the user web UI preferences in meta as booleans'
     it 'exposes the composer defaults in compose'
     it 'describes the user role in role'

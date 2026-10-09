@@ -610,7 +610,8 @@
         "features",
         "media_attachments",
         "settings",
-        "push_subscription"
+        "push_subscription",
+        "role"
       ],
       "type": "object"
     },

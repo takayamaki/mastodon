@@ -238,7 +238,19 @@ RSpec.describe 'Initial state embedded in the web app' do
   end
 
   context 'when the signed-in user has devops permission and software update checks are enabled' do
-    it 'includes critical_updates_pending as a boolean'
+    let(:user) { Fabricate(:user, role: Fabricate(:user_role, permissions: UserRole::FLAGS[:view_devops])) }
+
+    before do
+      allow(SoftwareUpdate).to receive_messages(check_enabled?: true, urgent_pending?: true)
+      sign_in user
+    end
+
+    it 'includes critical_updates_pending as a boolean' do
+      get root_path
+
+      expect(initial_state)
+        .to include('critical_updates_pending' => true)
+    end
   end
 
   context 'when the signed-in user account is not functional' do

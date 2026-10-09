@@ -450,7 +450,7 @@
               "type": "string"
             },
             "sso_redirect": {
-              "type": "string"
+              "type": ["string", "null"]
             },
             "status_page_url": {
               "type": "string"

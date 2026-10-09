@@ -164,7 +164,7 @@
           "type": "string"
         },
         "hide_collections": {
-          "type": "boolean"
+          "type": ["boolean", "null"]
         },
         "id": {
           "type": "string"

@@ -65,7 +65,22 @@ RSpec.describe 'Initial state embedded in the web app' do
         )
     end
 
-    it 'exposes the composer defaults in compose'
+    it 'exposes the composer defaults in compose' do
+      user.settings.update(default_privacy: 'unlisted', default_sensitive: true, default_language: 'ja', default_quote_policy: 'followers', default_spoiler_field: true)
+      user.save!
+
+      get root_path
+
+      expect(initial_state['compose'])
+        .to include(
+          'default_privacy' => 'unlisted',
+          'default_sensitive' => true,
+          'default_language' => 'ja',
+          'default_quote_policy' => 'followers',
+          'default_spoiler_field' => true
+        )
+    end
+
     it 'describes the user role in role'
     it 'has no push_subscription when the session has none'
     it 'does not include critical_updates_pending for a user without devops permission'

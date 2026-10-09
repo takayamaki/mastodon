@@ -105,7 +105,15 @@ RSpec.describe 'Initial state embedded in the web app' do
         .to include('push_subscription' => nil)
     end
 
-    it 'does not include critical_updates_pending for a user without devops permission'
+    it 'does not include critical_updates_pending for a user without devops permission' do
+      allow(SoftwareUpdate).to receive(:check_enabled?).and_return(true)
+
+      get root_path
+
+      expect(initial_state)
+        .to_not have_key('critical_updates_pending')
+    end
+
     it 'points meta.admin at the site contact account and includes that account in accounts'
   end
 

@@ -81,7 +81,23 @@ RSpec.describe 'Initial state embedded in the web app' do
         )
     end
 
-    it 'describes the user role in role'
+    it 'describes the user role in role' do
+      role = Fabricate(:user_role, name: 'Curator', color: '#ff0000', highlighted: true, permissions: UserRole::FLAGS[:manage_reports], collection_limit: 20)
+      user.update!(role:)
+
+      get root_path
+
+      expect(initial_state['role'])
+        .to eq(
+          'id' => role.id.to_s,
+          'name' => 'Curator',
+          'permissions' => role.computed_permissions.to_s,
+          'color' => '#ff0000',
+          'highlighted' => true,
+          'collection_limit' => 20
+        )
+    end
+
     it 'has no push_subscription when the session has none'
     it 'does not include critical_updates_pending for a user without devops permission'
     it 'points meta.admin at the site contact account and includes that account in accounts'

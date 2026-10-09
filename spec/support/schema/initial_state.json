@@ -421,7 +421,7 @@
               "type": "boolean"
             },
             "reduce_motion": {
-              "type": "boolean"
+              "type": ["boolean", "null"]
             },
             "registrations_open": {
               "type": "boolean"

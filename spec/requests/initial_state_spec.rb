@@ -163,7 +163,13 @@ RSpec.describe 'Initial state embedded in the web app' do
         .to include('accounts' => {}, 'settings' => {})
     end
 
-    it 'has null push_subscription and role'
+    it 'has null push_subscription and role' do
+      get root_path
+
+      expect(initial_state)
+        .to include('push_subscription' => nil, 'role' => nil)
+    end
+
     it 'leaves compose with an empty text only'
   end
 

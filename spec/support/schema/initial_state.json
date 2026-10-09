@@ -369,6 +369,9 @@
             "display_own_boosts": {
               "type": "boolean"
             },
+            "display_own_posts": {
+              "type": "boolean"
+            },
             "domain": {
               "type": "string"
             },

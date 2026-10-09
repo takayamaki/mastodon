@@ -156,7 +156,13 @@ RSpec.describe 'Initial state embedded in the web app' do
         .and not_include('boost_modal', 'delete_modal', 'expand_spoilers', 'advanced_layout', 'show_trends', 'emoji_style', 'wrapstodon')
     end
 
-    it 'has an empty accounts map and empty settings'
+    it 'has an empty accounts map and empty settings' do
+      get root_path
+
+      expect(initial_state)
+        .to include('accounts' => {}, 'settings' => {})
+    end
+
     it 'has null push_subscription and role'
     it 'leaves compose with an empty text only'
   end

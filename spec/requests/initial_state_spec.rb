@@ -41,7 +41,30 @@ RSpec.describe 'Initial state embedded in the web app' do
         )
     end
 
-    it 'exposes the user web UI preferences in meta as booleans'
+    it 'exposes the user web UI preferences in meta as booleans' do
+      user.settings.update('web.reblog_modal': true, 'web.delete_modal': false)
+      user.save!
+
+      get root_path
+
+      expect(initial_state['meta'])
+        .to include(
+          'boost_modal' => true,
+          'delete_modal' => false,
+          'quick_boosting' => false,
+          'missing_alt_text_modal' => true,
+          'auto_play_gif' => false,
+          'expand_spoilers' => false,
+          'reduce_motion' => false,
+          'disable_swiping' => false,
+          'disable_hover_cards' => false,
+          'advanced_layout' => false,
+          'use_blurhash' => true,
+          'use_pending_items' => false,
+          'show_trends' => true
+        )
+    end
+
     it 'exposes the composer defaults in compose'
     it 'describes the user role in role'
     it 'has no push_subscription when the session has none'

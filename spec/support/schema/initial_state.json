@@ -286,6 +286,9 @@
             "default_sensitive": {
               "type": "boolean"
             },
+            "default_spoiler_field": {
+              "type": "boolean"
+            },
             "me": {
               "type": "string"
             },

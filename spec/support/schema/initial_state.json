@@ -564,7 +564,7 @@
             "highlighted",
             "collection_limit"
           ],
-          "type": "object"
+          "type": ["object", "null"]
         },
         "settings": {
           "type": "object"

@@ -364,7 +364,7 @@
               "type": "string"
             },
             "display_media": {
-              "type": "string"
+              "type": ["string", "null"]
             },
             "display_own_boosts": {
               "type": "boolean"

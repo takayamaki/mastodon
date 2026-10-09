@@ -190,7 +190,16 @@ RSpec.describe 'Initial state embedded in the web app' do
         .to include('text' => 'Title Some text https://example.com/')
     end
 
-    it 'applies a requested visibility that is not wider than the user default'
+    it 'applies a requested visibility narrower than the user default' do
+      user.settings.update(default_privacy: 'public')
+      user.save!
+
+      get share_path(text: 'Hello', visibility: 'unlisted')
+
+      expect(initial_state['compose'])
+        .to include('default_privacy' => 'unlisted')
+    end
+
     it 'ignores a requested visibility wider than the user default'
   end
 

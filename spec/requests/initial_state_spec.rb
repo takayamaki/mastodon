@@ -254,7 +254,17 @@ RSpec.describe 'Initial state embedded in the web app' do
   end
 
   context 'when the signed-in user account is not functional' do
-    it 'conforms to the initial_state JSON schema'
+    let(:user) { Fabricate(:user, confirmed_at: nil) }
+
+    # The home page redirects non-functional users (require_functional!), so use a page that skips it
+    before { sign_in user }
+
+    it 'conforms to the initial_state JSON schema' do
+      get about_path
+
+      expect(initial_state).to match_json_schema('initial_state')
+    end
+
     it 'reports the account in meta.disabled_account_id and includes it in accounts'
     it 'has a null meta.access_token and no meta.me'
     it 'reports the destination in meta.moved_to_account_id when the account has moved'

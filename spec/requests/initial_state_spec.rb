@@ -114,7 +114,18 @@ RSpec.describe 'Initial state embedded in the web app' do
         .to_not have_key('critical_updates_pending')
     end
 
-    it 'points meta.admin at the site contact account and includes that account in accounts'
+    it 'points meta.admin at the site contact account and includes that account in accounts' do
+      contact = Fabricate(:account, username: 'contact')
+      Setting.site_contact_username = '@contact'
+
+      get root_path
+
+      expect(initial_state)
+        .to include(
+          'meta' => include('admin' => contact.id.to_s),
+          'accounts' => include(contact.id.to_s => include('username' => 'contact'))
+        )
+    end
   end
 
   context 'when an anonymous visitor opens the home page' do

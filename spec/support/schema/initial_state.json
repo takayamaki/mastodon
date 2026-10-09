@@ -343,7 +343,7 @@
               "type": "boolean"
             },
             "auto_play_gif": {
-              "type": "boolean"
+              "type": ["boolean", "null"]
             },
             "boost_modal": {
               "type": "boolean"

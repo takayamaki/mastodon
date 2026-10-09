@@ -283,7 +283,18 @@ RSpec.describe 'Initial state embedded in the web app' do
         .and not_include('me')
     end
 
-    it 'reports the destination in meta.moved_to_account_id when the account has moved'
+    it 'reports the destination in meta.moved_to_account_id when the account has moved' do
+      destination = Fabricate(:account, username: 'destination')
+      user.account.update!(moved_to_account: destination)
+
+      get about_path
+
+      expect(initial_state)
+        .to include(
+          'meta' => include('moved_to_account_id' => destination.id.to_s),
+          'accounts' => include(destination.id.to_s => include('username' => 'destination'))
+        )
+    end
   end
 
   context 'when the server runs in single user mode' do

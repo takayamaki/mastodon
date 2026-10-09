@@ -275,7 +275,14 @@ RSpec.describe 'Initial state embedded in the web app' do
         )
     end
 
-    it 'has a null meta.access_token and no meta.me'
+    it 'has a null meta.access_token and no meta.me' do
+      get about_path
+
+      expect(initial_state['meta'])
+        .to include('access_token' => nil)
+        .and not_include('me')
+    end
+
     it 'reports the destination in meta.moved_to_account_id when the account has moved'
   end
 

@@ -298,7 +298,20 @@ RSpec.describe 'Initial state embedded in the web app' do
   end
 
   context 'when the server runs in single user mode' do
-    it 'reports the owner account in meta.owner and includes it in accounts'
+    let!(:owner) { Fabricate(:account, username: 'solo') }
+
+    before { allow(Rails.configuration.x).to receive(:single_user_mode).and_return(true) }
+
+    it 'reports the owner account in meta.owner and includes it in accounts' do
+      get root_path
+
+      expect(initial_state)
+        .to include(
+          'meta' => include('owner' => owner.id.to_s, 'single_user_mode' => true),
+          'accounts' => include(owner.id.to_s => include('username' => 'solo'))
+        )
+    end
+
     it 'reports registrations as closed'
   end
 

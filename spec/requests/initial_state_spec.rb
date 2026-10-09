@@ -212,7 +212,29 @@ RSpec.describe 'Initial state embedded in the web app' do
   end
 
   context 'when a signed-in user has a web push subscription for the session' do
-    it 'describes the subscription in push_subscription'
+    let(:user) { Fabricate(:user) }
+    let(:subscription) { Fabricate(:web_push_subscription, user:, data: { alerts: { mention: true, follow: false }, policy: 'followed' }) }
+
+    before do
+      sign_in user
+      # The session activation only exists after the first request
+      get root_path
+      user.session_activations.sole.update!(web_push_subscription: subscription)
+    end
+
+    it 'describes the subscription in push_subscription' do
+      get root_path
+
+      expect(initial_state['push_subscription'])
+        .to eq(
+          'id' => subscription.id,
+          'endpoint' => subscription.endpoint,
+          'standard' => subscription.standard,
+          'alerts' => { 'mention' => true, 'follow' => false },
+          'server_key' => Rails.configuration.x.vapid.public_key,
+          'policy' => 'followed'
+        )
+    end
   end
 
   context 'when the signed-in user has devops permission and software update checks are enabled' do

@@ -14,7 +14,16 @@ RSpec.describe 'Initial state embedded in the web app' do
       expect(initial_state).to match_json_schema('initial_state')
     end
 
-    it 'identifies the current account in meta.me and compose.me as the account id string'
+    it 'identifies the current account in meta.me and compose.me as the account id string' do
+      get root_path
+
+      expect(initial_state)
+        .to include(
+          'meta' => include('me' => user.account.id.to_s),
+          'compose' => include('me' => user.account.id.to_s)
+        )
+    end
+
     it 'carries the session token in meta.access_token'
     it 'includes the current account in accounts keyed by id'
     it 'exposes the user web UI preferences in meta as booleans'

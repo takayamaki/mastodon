@@ -129,7 +129,14 @@ RSpec.describe 'Initial state embedded in the web app' do
   end
 
   context 'when an anonymous visitor opens the home page' do
-    it 'conforms to the initial_state JSON schema'
+    it 'conforms to the initial_state JSON schema' do
+      pending 'the schema still encodes the hand-written TS type, which has drifted from the serializer'
+
+      get root_path
+
+      expect(initial_state).to match_json_schema('initial_state')
+    end
+
     it 'has a null meta.access_token and no meta.me'
     it 'exposes only the instance-wide display defaults in meta'
     it 'has an empty accounts map and empty settings'

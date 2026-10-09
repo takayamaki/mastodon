@@ -311,6 +311,19 @@
           },
           "type": "array"
         },
+        "media_attachments": {
+          "additionalProperties": false,
+          "properties": {
+            "accept_content_types": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "required": ["accept_content_types"],
+          "type": "object"
+        },
         "meta": {
           "additionalProperties": false,
           "properties": {
@@ -543,7 +556,14 @@
           "type": "object"
         }
       },
-      "required": ["accounts", "languages", "compose", "meta", "features"],
+      "required": [
+        "accounts",
+        "languages",
+        "compose",
+        "meta",
+        "features",
+        "media_attachments"
+      ],
       "type": "object"
     },
     "InitialStateLanguage": {

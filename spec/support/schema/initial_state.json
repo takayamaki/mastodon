@@ -331,7 +331,7 @@
           "additionalProperties": false,
           "properties": {
             "access_token": {
-              "type": "string"
+              "type": ["string", "null"]
             },
             "activity_api_enabled": {
               "type": "boolean"

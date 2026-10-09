@@ -265,7 +265,16 @@ RSpec.describe 'Initial state embedded in the web app' do
       expect(initial_state).to match_json_schema('initial_state')
     end
 
-    it 'reports the account in meta.disabled_account_id and includes it in accounts'
+    it 'reports the account in meta.disabled_account_id and includes it in accounts' do
+      get about_path
+
+      expect(initial_state)
+        .to include(
+          'meta' => include('disabled_account_id' => user.account.id.to_s),
+          'accounts' => match(user.account.id.to_s => include('username' => user.account.username))
+        )
+    end
+
     it 'has a null meta.access_token and no meta.me'
     it 'reports the destination in meta.moved_to_account_id when the account has moved'
   end
